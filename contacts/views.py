@@ -55,7 +55,7 @@ def createAuthUser(request):
             'email': authUser.email,
             'username': authUser.username,
         },
-        'token': str(token),
+        'token': "Bearer " + str(token),
     })
     
 # Function to Authenticate an Auth User
