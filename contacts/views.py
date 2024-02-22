@@ -74,10 +74,13 @@ def login(request):
 
     # Authenticate the user
     # authUser = authenticate(request, email=email, password=password)
-    authUser = AuthUser.objects.get(email=email, password=password)
-
-    if authUser is None:
+    try:
+        authUser = AuthUser.objects.get(email=email, password=password)
+    except AuthUser.DoesNotExist:
         return JsonResponse({'message': 'Invalid email or password', 'status_code': status.HTTP_401_UNAUTHORIZED})
+
+    # if authUser is None:
+    #     return JsonResponse({'message': 'Invalid email or password', 'status_code': status.HTTP_401_UNAUTHORIZED})
 
     # Generate a JWT token for the user
     token = AccessToken.for_user(authUser)
